@@ -1,11 +1,14 @@
 Locale::gettext
-version 1.03
+version 1.04
 
 This is a perl5 module quickly written to gain access to
 the C library functions for internatialization. They
 work just like the C versions.
 
-Locale::gettext is Copyright 1996..2004 by Kim Vandry
+As of version 1.04, an object oriented interface more
+suitable to native Perl programs is available.
+
+Locale::gettext is Copyright 1996..2005 by Kim Vandry
 <vandry@TZoNE.ORG>. All rights reserved.
 
 This library is free software; you may distribute under the terms
@@ -14,6 +17,9 @@ specified in the Perl README file.
 
 Changes
 -------
+
+1.04	Add several functions provided by the GNU gettext library
+	Create object oriented interface
 
 1.03	Fix error in README file
 
@@ -53,8 +59,15 @@ wrap the gettext() function around all of the
 text strings. Needless to say, this is much easier if
 you do it while you write.
 
+# create object for oo interface
+my $d = Locale::gettext->domain("my_program");
+
 print "Welcome to my program\n";
 
+# oo
+print $d->get("Welcome to my program"), "\n";
+
+# traditional
 print gettext("Welcome to my program"), "\n";
 
 Note that you probably don't want to include that newline
@@ -125,13 +138,15 @@ setlocale(LC_MESSAGES, "");
 # parameter is your database's identifier that you chose
 # above.
 #
+# oo interface:
+
+my $d = Locale::gettext->domain("my_domain");
+$d->dir("/opt/my_package_name/locale");
+
+# traditional interface:
 bindtextdomain("my_domain", "/opt/my_package_name/locale");
-#
-# Now set the default text domain to yours. If you do not
-# call yhis, then the default is "messages".
-#
 textdomain("my_domain");
-#
+
 # That's it for the initializations
 
 Step 3
@@ -200,7 +215,7 @@ Test it out
 $ my_program
 Welcome to my program
 $ LANG=fr my_program
-Bienvenue à mon programme
+Bienvenue Ã  mon programme
 $ LANG=de my_program
 Willkommen in mein Program
 
@@ -209,4 +224,4 @@ Willkommen in mein Program
 $ LC_MESSAGES=fr
 $ export LC_MESSAGES
 $ my_program
-Bienvenue à mon programme
+Bienvenue Ã  mon programme
