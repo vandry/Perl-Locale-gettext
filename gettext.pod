@@ -1,0 +1,42 @@
+=head1 NAME
+
+gettext - message handling functions
+
+=head1 SYNOPSIS
+
+    use gettext;
+    use POSIX;     # Needed for setlocale()
+
+    setlocale(LC_MESSAGES, "");
+    textdomain("my_program");
+
+    print gettext("Welcome to my program"), "\n";
+            # (printed in the local language)
+
+=head1 DESCRIPTION
+
+The gettext module permits access from perl to the gettext() family of
+functions for retrieving message strings from databases constructed
+to internationalize software.
+
+gettext(), dgettext(), and dcgettext() attempt to retrieve a string
+matching their C<msgid> parameter within the context of the current
+locale. dcgettext() takes the message's category and the text domain
+as parameters while dcgettext() defaults to the LC_MESSAGES category
+and gettext() defaults to LC_MESSAGES and uses the current text domain.
+If the string is not found in the database, then C<msgid> is returned.
+
+textdomain() sets the current text domain and returns the previously
+active domain.
+
+I<bindtextdomain(domain, dirname)> instructs the retrieval functions to look
+for the databases belonging to domain C<domain> in the directory
+C<dirname>
+
+=head1 SEE ALSO
+
+gettext(3i), gettext(1), msgfmt(1)
+
+=head1 AUTHOR
+
+Kim Vandry <vandry@Mlink.NET>
