@@ -1,12 +1,21 @@
 Locale::gettext
-version 1.01
+version 1.02
 
 This is a perl5 module quickly written to gain access to
 the C library functions for internatialization. They
 work just like the C versions.
 
+Locale::gettext is Copyright 1996..2004 by Kim Vandry
+<vandry@TZoNE.ORG>. All rights reserved.
+
+This library is free software; you may distribute under the terms
+of either the GNU General Public License or the Artistic License, as
+specified in the Perl README file.
+
 Changes
 -------
+
+1.02	Include a License
 
 1.01	Changed from "gettext" to "Locale::gettext" (i.e.
 	moved under Locale::) on the advice of several
@@ -28,7 +37,7 @@ Note that your vendor's implementation of these functions
 may be a bit different, but I think that in general these
 are quite standard POSIX functions.
 
-Kim Vandry <vandry@Mlink.NET>
+Kim Vandry <vandry@TZoNE.ORG>
 Mlink Internet <http://www.Mlink.NET>
 July 1996
 
