@@ -6,7 +6,7 @@ require Exporter;
 require DynaLoader;
 @ISA = qw(Exporter DynaLoader);
 
-$VERSION = "1.01" ;
+$VERSION = "1.03" ;
 
 %EXPORT_TAGS = (
 

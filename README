@@ -1,5 +1,5 @@
 Locale::gettext
-version 1.02
+version 1.03
 
 This is a perl5 module quickly written to gain access to
 the C library functions for internatialization. They
@@ -14,6 +14,8 @@ specified in the Perl README file.
 
 Changes
 -------
+
+1.03	Fix error in README file
 
 1.02	Include a License
 
@@ -69,7 +71,7 @@ program:
 
 #
 use POSIX;     # for setlocale()
-use gettext;
+use Locale::gettext;
 #
 # The following statement initializes the locale handling
 # code in the C library. Normally, it causes it to read
