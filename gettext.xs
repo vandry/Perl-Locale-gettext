@@ -25,7 +25,7 @@ int arg;
     return 0;
 }
 
-MODULE = gettext	PACKAGE = gettext
+MODULE = Locale::gettext	PACKAGE = Locale::gettext
 
 double
 constant(name,arg)

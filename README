@@ -1,6 +1,28 @@
+Locale::gettext
+version 1.01
+
 This is a perl5 module quickly written to gain access to
 the C library functions for internatialization. They
-work just like the C versions. Here's a quick tutorial.
+work just like the C versions.
+
+Changes
+-------
+
+1.01	Changed from "gettext" to "Locale::gettext" (i.e.
+	moved under Locale::) on the advice of several
+	people
+
+	Small "lint" fix from schwern@starmedia.net
+
+1.00	Initial version
+
+TODO
+----
+
+A TIEHASH interface
+
+Here's a quick tutorial.
+-----------------------
 
 Note that your vendor's implementation of these functions
 may be a bit different, but I think that in general these

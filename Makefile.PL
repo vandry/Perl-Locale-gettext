@@ -1,6 +1,6 @@
 use ExtUtils::MakeMaker;
 WriteMakefile(
+    NAME => "Locale::gettext",
     LIBS => ["-lintl"],
-    XSPROTOARG => '-noprototypes', 		# XXX remove later?
     VERSION_FROM => 'gettext.pm', 
 );
