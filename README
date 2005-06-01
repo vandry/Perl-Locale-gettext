@@ -1,5 +1,5 @@
 Locale::gettext
-version 1.04
+version 1.05
 
 This is a perl5 module quickly written to gain access to
 the C library functions for internatialization. They
@@ -17,6 +17,9 @@ specified in the Perl README file.
 
 Changes
 -------
+
+1.05	Bugfix: [cpan #13042] useless #ifdef should be #if
+	Bugfix: [cpan #13044] make test fails when using POSIX locale
 
 1.04	Add several functions provided by the GNU gettext library
 	Create object oriented interface

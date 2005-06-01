@@ -51,7 +51,7 @@ constant(char *name, int arg)
 #define ANY_MISSING 1
 #endif
 
-#ifdef ANY_MISSING
+#if ANY_MISSING
 static int
 not_here(char *s)
 {

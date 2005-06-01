@@ -24,6 +24,10 @@ sub gen {
 		skip("cannot run test in the C locale", 0);
 		exit 0;
 	}
+	if ($messages eq 'POSIX') {
+		skip("cannot run test in the POSIX locale", 0);
+		exit 0;
+	}
 
 	mkdir "test_data/" . $messages, 0755 unless (-d "test_data/" . $messages);
 	mkdir "test_data/" . $messages . "/LC_MESSAGES", 0755
