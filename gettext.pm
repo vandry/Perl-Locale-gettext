@@ -32,6 +32,7 @@ to internationalize software.
 =cut
 
 use Carp;
+use POSIX qw(:locale_h);
 
 require Exporter;
 require DynaLoader;
