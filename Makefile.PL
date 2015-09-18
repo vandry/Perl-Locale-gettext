@@ -35,6 +35,15 @@ WriteMakefile(
     NAME => "Locale::gettext",
     LIBS => ($libs eq '') ? [] : [$libs],
     VERSION_FROM => 'gettext.pm', 
+    META_MERGE => {
+        resources => {
+            repository => 'https://github.com/vandry/Perl-Locale-gettext',
+            license => 'http://dev.perl.org/licenses/',
+        },
+    },
+    ABSTRACT => "Perl bindings for POSIX i18n gettext functions",
+    AUTHOR => "Kim Vandry <vandry@TZoNE.ORG>",
+    LICENSE => 'perl',
 );
 
 sub conftest {

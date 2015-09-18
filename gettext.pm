@@ -46,7 +46,7 @@ BEGIN {
 	import Encode if ($encode_available);
 }
 
-$VERSION = "1.05" ;
+$VERSION = "1.06" ;
 
 %EXPORT_TAGS = (
 
@@ -268,7 +268,7 @@ not provide it.
 
 =head1 VERSION
 
-1.05.
+1.06.
 
 =head1 SEE ALSO
 

@@ -1,0 +1,13 @@
+gettext.pm
+gettext.xs
+Makefile.PL
+README
+t/bind.t
+t/frconvert.t
+t/jaconvert.t
+t/raw.t
+t/use.t
+test_data/foo.po
+test_data/gen_test_data.pl
+test_data/jaeuc.po
+MANIFEST
