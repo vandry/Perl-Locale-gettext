@@ -235,7 +235,7 @@ sub DESTROY {
 gettext(), dgettext(), and dcgettext() attempt to retrieve a string
 matching their C<msgid> parameter within the context of the current
 locale. dcgettext() takes the message's category and the text domain
-as parameters while dcgettext() defaults to the LC_MESSAGES category
+as parameters while dgettext() defaults to the LC_MESSAGES category
 and gettext() defaults to LC_MESSAGES and uses the current text domain.
 If the string is not found in the database, then C<msgid> is returned.
 

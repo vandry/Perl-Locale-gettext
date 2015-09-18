@@ -50,7 +50,7 @@ sub conftest {
 	close TEST;
 	open(SAVE, ">&STDERR");
 	open(STDERR, ">/dev/null");
-	system($cc . " -o conftest " . $libs . " conftest.c");
+	system($cc . " -o conftest " . " conftest.c " . $libs);
 	my $exitstatus = $?;
 	open(STDERR, ">&SAVE");
 	if ($exitstatus != 0) {

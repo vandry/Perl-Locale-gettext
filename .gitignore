@@ -1,0 +1,12 @@
+/MYMETA.json
+/MYMETA.yml
+/Makefile
+/blib
+/gettext.bs
+/gettext.c
+/gettext.o
+/pm_to_blib
+/test_data/??_??
+/test_data/??_??.*
+/config.h
+/Makefile.old
