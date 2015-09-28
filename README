@@ -1,5 +1,5 @@
 Locale::gettext
-version 1.06
+version 1.07
 
 This is a perl5 module quickly written to gain access to
 the C library functions for internatialization. They
@@ -17,6 +17,8 @@ specified in the Perl README file.
 
 Changes
 -------
+
+1.07	Fix test failures caused by $LANGUAGE being set
 
 1.06	Bugfix: #104667	Makefile.PL libaries need to be listed after .o files
 	Bugfix: #104668	ensure availability of locale API, correct typo in documentation

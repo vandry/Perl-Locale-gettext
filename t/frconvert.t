@@ -19,9 +19,6 @@ if ($@ =~ /Encode module not available/) {
 	if ($d->get("No problem") eq "Pas de probl\x{e8}me") {
 		ok(1);
 	} else {
-use Data::Dumper;
-print Dumper($d);
-print "[", $d->get("No problem"), "]\n";
 		ok(0);
 	}
 }
