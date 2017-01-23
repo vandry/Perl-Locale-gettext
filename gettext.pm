@@ -286,6 +286,12 @@ gettext(3i), gettext(1), msgfmt(1)
 
 Kim Vandry <vandry@TZoNE.ORG>
 
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.24.0 or,
+at your option, any later version of Perl 5 you may have available.
+
 =cut
 
 1;
