@@ -34,7 +34,8 @@ unlink("conftest");
 WriteMakefile(
     NAME => "Locale::gettext",
     LIBS => ($libs eq '') ? [] : [$libs],
-    VERSION_FROM => 'gettext.pm', 
+    VERSION_FROM => 'gettext.pm',
+	LICENSE => 'perl_5',
     META_MERGE => {
         resources => {
             repository => 'https://github.com/vandry/Perl-Locale-gettext',

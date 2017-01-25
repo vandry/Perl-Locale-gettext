@@ -1,0 +1,33 @@
+Revision history for Perl extension Locale::gettext
+
+1.07
+        - Fix test failures caused by $LANGUAGE being set
+
+1.06
+        - Bugfix: #104667	Makefile.PL libaries need to be listed after .o
+          files
+	    - Bugfix: #104668	ensure availability of locale API, correct typo in
+	      documentation
+	    - Add META.yml (Fixes #91921)
+
+1.05
+        - Bugfix: [cpan #13042] useless #ifdef should be #if
+	    - Bugfix: [cpan #13044] make test fails when using POSIX locale
+
+1.04
+        - Add several functions provided by the GNU gettext library
+	    - Create object oriented interface
+
+1.03
+        - Fix error in README file
+
+1.02
+        - Include a License
+
+1.01
+        - Changed from "gettext" to "Locale::gettext" (i.e. moved under
+          Locale::) on the advice of several people
+        - Small "lint" fix from schwern@starmedia.net
+
+1.00
+        - Initial version

@@ -31,12 +31,19 @@ to internationalize software.
 
 =cut
 
+use strict;
+use warnings;
+
 use Carp;
 use POSIX qw(:locale_h);
 
 require Exporter;
 require DynaLoader;
-@ISA = qw(Exporter DynaLoader);
+
+use vars '$AUTOLOAD';
+our @ISA = qw(Exporter DynaLoader);
+
+my $encode_available;
 
 BEGIN {
 	eval {
@@ -46,9 +53,9 @@ BEGIN {
 	import Encode if ($encode_available);
 }
 
-$VERSION = "1.07" ;
+our $VERSION = "1.07" ;
 
-%EXPORT_TAGS = (
+our %EXPORT_TAGS = (
 
     locale_h =>	[qw(LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES LC_ALL)],
 
@@ -58,7 +65,7 @@ $VERSION = "1.07" ;
 
 Exporter::export_tags();
 
-@EXPORT_OK = qw(
+our @EXPORT_OK = qw(
 );
 
 bootstrap Locale::gettext $VERSION;
@@ -69,7 +76,8 @@ sub AUTOLOAD {
     $constname =~ s/.*:://;
     my $val = constant($constname, (@_ ? $_[0] : 0));
     if ($! == 0) {
-	*$AUTOLOAD = sub { $val };
+		no strict 'refs';
+		*$AUTOLOAD = sub { $val };
     }
     else {
 	croak "Missing constant $constname";
@@ -277,6 +285,12 @@ gettext(3i), gettext(1), msgfmt(1)
 =head1 AUTHOR
 
 Kim Vandry <vandry@TZoNE.ORG>
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.24.0 or,
+at your option, any later version of Perl 5 you may have available.
 
 =cut
 
