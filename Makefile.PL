@@ -4,6 +4,7 @@ use Config;
 use strict;
 use warnings;
 use Config::AutoConf;
+use Data::Dumper ();
 
 my %args;
 for (@ARGV) {
@@ -47,11 +48,23 @@ for my $fn (qw(gettext dgettext dcgettext ngettext bind_textdomain_codeset chirp
 
 $ac->write_config_h;
 
+my %config;
+
+open my $fh, '>', "Config.pm" or die "Unable to create file 'Config.pm': $!";
+print {$fh} "package Locale::gettext;\n";
+print {$fh} Data::Dumper->Dump([\%config], [qw(*config)]);
+print {$fh} "1;\n";
+close $fh;
+
 WriteMakefile(
     NAME => "Locale::gettext",
     VERSION_FROM => 'gettext.pm',
     LICENSE => 'perl_5',
     LIBS => join(" ", @libs),
+    PM => {
+        'gettext.pm' => '$(INST_LIB)/Locale/gettext.pm',
+        'Config.pm' => '$(INST_LIB)/Locale/gettext/Config.pm',
+    },
     CONFIGURE_REQUIRES => {
         "ExtUtils::MakeMaker" => "6.52",
         "Config::AutoConf" => "0.313",

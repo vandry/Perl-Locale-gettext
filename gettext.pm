@@ -43,6 +43,9 @@ require DynaLoader;
 use vars '$AUTOLOAD';
 our @ISA = qw(Exporter DynaLoader);
 
+require Locale::gettext::Config;
+our %config;
+
 my $encode_available;
 
 BEGIN {
