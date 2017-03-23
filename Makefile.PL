@@ -49,6 +49,10 @@ for my $fn (qw(gettext dgettext dcgettext ngettext bind_textdomain_codeset chirp
 $ac->write_config_h;
 
 my %config;
+if (defined(my $dlpath = $args{DLPATH})) {
+    $^O eq 'MSWin32' or die "DLPATH is only supported on MS Windows operating systems";
+    $config{DLPATH} = $dlpath;
+}
 
 open my $fh, '>', "Config.pm" or die "Unable to create file 'Config.pm': $!";
 print {$fh} "package Locale::gettext;\n";

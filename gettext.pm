@@ -71,7 +71,14 @@ Exporter::export_tags();
 our @EXPORT_OK = qw(
 );
 
-bootstrap Locale::gettext $VERSION;
+if (defined (my $dlpath = $config{DLPATH})) {
+    $^O eq 'MSWin32' or die "Internal error: DLPATH is only supported on MS Windows operating systems";
+    local $ENV{PATH} = "$ENV{PATH};$dlpath";
+    bootstrap Locale::gettext $VERSION;
+}
+else {
+    bootstrap Locale::gettext $VERSION;
+}
 
 sub AUTOLOAD {
     local $! = 0;
