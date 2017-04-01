@@ -10,3 +10,5 @@
 /test_data/??_??.*
 /config.h
 /Makefile.old
+/Config.pm
+/config.log
