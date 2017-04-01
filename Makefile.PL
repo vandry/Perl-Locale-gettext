@@ -1,41 +1,84 @@
 use ExtUtils::MakeMaker;
 use Config;
 
-my $cc;
-if (defined($ENV{'CC'})) {
-	$cc = $ENV{'CC'};
-} else {
-	$cc = $Config{'cc'};
-}
-my $libs = '';
+use strict;
+use warnings;
+use Config::AutoConf;
+use Data::Dumper ();
 
-unless (conftest("char *x = gettext(\"foo\");", "gettext", 0)) {
-	# try with -lintl
-	$libs = "-lintl";
-	unless (conftest("char *x = gettext(\"foo\");", "gettext", 0)) {
-		unlink("conftest.c");
-		unlink("conftest");
-		die "gettext function not found. Please install libintl";
-	}
+my %args;
+for (@ARGV) {
+    $args{$1} = $2 if /(\w+)=(.*)/;
 }
 
-open(CONFIG, ">config.h");
-print CONFIG "/* Generated automatically by ", $0, ". Do not edit */\n";
+my @libs;
 
-conftest("char *x = dcgettext(\"foo\", \"bar\", 0);", "dgettext", 1);
-conftest("char *x = ngettext(\"foo\", \"foos\", 1);", "ngettext", 1);
-conftest("char *x = bind_textdomain_codeset(\"foo\", \"UTF-8\");", "bind_textdomain_codeset", 1);
+my $ac = Config::AutoConf->new;
 
-close CONFIG;
+if (defined(my $ccflags = $args{CCFLAGS})) {
+    $ac->check_compiler_flags($ccflags);
+}
+if (defined(my $inc = $args{INC})) {
+    $ac->push_preprocess_flags($inc)
+}
+if (defined(my $lddlflags = $args{LDDLFLAGS})) {
+    $ac->push_link_flags($lddlflags);
+}
+if (defined(my $libs = $args{LIBS})) {
+    push @libs, $libs;
+    $ac->push_link_flags($libs);
+}
 
-unlink("conftest.c");
-unlink("conftest");
+# Debian stable has Config::AutoConf version 0.305 which lacks
+# the check_valid_compiler method.
+# TODO(vandry): Remove the guard once versions inferior to 0.306
+# are sufficiently obsolete.
+if ($ac->can('check_valid_compiler')) {
+    $ac->check_valid_compiler() or die;
+}
+$ac->check_header('libintl.h') or die;
+
+my $lib = $ac->search_libs('gettext', ['intl']);
+if ($lib eq '0') {
+    die;
+}
+elsif ($lib ne 'none required') {
+    push @libs, "-l$lib";
+}
+
+for my $fn (qw(gettext dgettext dcgettext ngettext bind_textdomain_codeset chirpy_canary)) {
+    if ($ac->check_decl($fn, {prologue => "#include <libintl.h>\n"})) {
+        $ac->define_var("HAVE_".uc($fn), 1);
+    }
+}
+
+$ac->write_config_h;
+
+my %config;
+if (defined(my $dlpath = $args{DLPATH})) {
+    $^O eq 'MSWin32' or die "DLPATH is only supported on MS Windows operating systems";
+    $config{DLPATH} = $dlpath;
+}
+
+open my $fh, '>', "Config.pm" or die "Unable to create file 'Config.pm': $!";
+print {$fh} "package Locale::gettext;\n";
+print {$fh} Data::Dumper->Dump([\%config], [qw(*config)]);
+print {$fh} "1;\n";
+close $fh;
 
 WriteMakefile(
     NAME => "Locale::gettext",
-    LIBS => ($libs eq '') ? [] : [$libs],
     VERSION_FROM => 'gettext.pm',
-	LICENSE => 'perl_5',
+    LICENSE => 'perl_5',
+    LIBS => join(" ", @libs),
+    PM => {
+        'gettext.pm' => '$(INST_LIB)/Locale/gettext.pm',
+        'Config.pm' => '$(INST_LIB)/Locale/gettext/Config.pm',
+    },
+    CONFIGURE_REQUIRES => {
+        "ExtUtils::MakeMaker" => "6.52",
+        "Config::AutoConf" => "0.313",
+    },
     META_MERGE => {
         resources => {
             repository => 'https://github.com/vandry/Perl-Locale-gettext',
@@ -43,34 +86,6 @@ WriteMakefile(
         },
     },
     ABSTRACT => "Perl bindings for POSIX i18n gettext functions",
-    AUTHOR => "Kim Vandry <vandry@TZoNE.ORG>",
+    AUTHOR => 'Kim Vandry <vandry@TZoNE.ORG>',
     LICENSE => 'perl',
 );
-
-sub conftest {
-	my ($testcode, $func, $record) = @_;
-
-	print "checking for ", $func;
-	print(" in ", $libs) if ($libs ne '');
-	print "...";
-	open(TEST, ">conftest.c");
-	print TEST "#include <libintl.h>\n\nint main(int argc, char **argv)\n{\n";
-	print TEST $testcode;
-	print TEST "return 0;}\n";
-	close TEST;
-	open(SAVE, ">&STDERR");
-	open(STDERR, ">/dev/null");
-	system($cc . " -o conftest " . " conftest.c " . $libs);
-	my $exitstatus = $?;
-	open(STDERR, ">&SAVE");
-	if ($exitstatus != 0) {
-		print " no\n";
-		return 0;
-	} else {
-		print " yes\n";
-		if ($record) {
-			print CONFIG "#define HAVE_", uc($func), "\n";
-		}
-		return 1;
-	}
-}
