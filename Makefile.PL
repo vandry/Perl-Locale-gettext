@@ -29,7 +29,13 @@ if (defined(my $libs = $args{LIBS})) {
     $ac->push_link_flags($libs);
 }
 
-$ac->check_valid_compiler() or die;
+# Debian stable has Config::AutoConf version 0.305 which lacks
+# the check_valid_compiler method.
+# TODO(vandry): Remove the guard once versions inferior to 0.306
+# are sufficiently obsolete.
+if ($ac->can('check_valid_compiler')) {
+    $ac->check_valid_compiler() or die;
+}
 $ac->check_header('libintl.h') or die;
 
 my $lib = $ac->search_libs('gettext', ['intl']);
