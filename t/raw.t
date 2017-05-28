@@ -1,8 +1,9 @@
 #!/usr/bin/env perl -w
 use strict;
 use Test;
+use lib 't/lib';
 BEGIN { plan tests => 1 }
-require "test_data/gen_test_data.pl";
+require "gen_test_data.pl";
 
 gen("foo");
 use Locale::gettext;
