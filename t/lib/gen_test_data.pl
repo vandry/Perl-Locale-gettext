@@ -28,11 +28,11 @@ sub gen {
 		skip("cannot run test without a locale set", 0);
 		exit 0;
 	}
-	if ($messages eq 'C') {
+	if ($messages =~ /^C(\..*)?$/) {
 		skip("cannot run test in the C locale", 0);
 		exit 0;
 	}
-	if ($messages eq 'POSIX') {
+	if ($messages =~ /^POSIX(\..*)?$/) {
 		skip("cannot run test in the POSIX locale", 0);
 		exit 0;
 	}
